@@ -1,0 +1,173 @@
+/* Reset basic style */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    background-color: #f4f4f9;
+    padding: 40px 20px;
+    color: #333;
+}
+
+/* Membuat form seperti kertas dokumen */
+.form-container {
+    background-color: #ffffff;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 50px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    border-top: 5px solid #003366; /* Warna biru formal */
+}
+
+/* Styling Header */
+.header {
+    text-align: center;
+    margin-bottom: 30px;
+    border-bottom: 2px solid #333;
+    padding-bottom: 20px;
+}
+
+.header h2 {
+    font-size: 20px;
+    margin-bottom: 5px;
+    color: #003366;
+}
+
+.header h3 {
+    font-size: 16px;
+    font-weight: normal;
+    margin-bottom: 15px;
+}
+
+.header h1 {
+    font-size: 24px;
+    text-decoration: underline;
+}
+
+/* Styling setiap baris input */
+.form-group {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-weight: bold;
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+/* Styling untuk input box */
+input[type="text"],
+input[type="number"],
+input[type="date"],
+textarea {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 15px;
+    width: 100%;
+}
+
+textarea {
+    resize: vertical;
+}
+
+/* Membedakan input yang tidak bisa diedit (Read-Only) */
+.readonly-text,
+#date,
+#words {
+    background-color: #f9f9f9;
+    color: #555;
+    font-weight: bold;
+    border: none;
+    border-bottom: 1px dashed #ccc;
+    border-radius: 0;
+}
+
+/* Baris khusus untuk To dan Date yang sejajar */
+.row-group {
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.half-width {
+    width: 48%;
+    display: flex;
+    flex-direction: column;
+}
+
+.date-field {
+    align-items: flex-end;
+}
+
+.date-field label {
+    text-align: right;
+}
+
+.date-field input {
+    text-align: right;
+}
+
+/* Styling untuk Note & Radio Button */
+.notes-section {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+.radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.radio-group label {
+    font-weight: normal;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Tombol Print */
+.print-btn {
+    margin-top: 30px;
+    padding: 12px 20px;
+    background-color: #003366;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.print-btn:hover {
+    background-color: #002244;
+}
+
+/* Menghilangkan tombol saat form di-print */
+@media print {
+    body {
+        background-color: white;
+        padding: 0;
+    }
+    .form-container {
+        box-shadow: none;
+        border: none;
+        padding: 0;
+    }
+    .print-btn {
+        display: none;
+    }
+    input, textarea {
+        border: none;
+        border-bottom: 1px solid #000;
+        border-radius: 0;
+        padding-left: 0;
+    }
+}
