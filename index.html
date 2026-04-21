@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Request - Universitas Advent Indonesia</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="form-container">
+        <div class="header">
+            <h2>UNIVERSITAS ADVENT INDONESIA</h2>
+            <h3>TREASURY DEPARTMENT</h3>
+            <h1>PAYMENT REQUEST</h1>
+        </div>
+
+        <form id="paymentForm">
+            <div class="form-group row-group">
+                <div class="half-width">
+                    <label>To:</label>
+                    <input type="text" value="Disbursement Cashier" readonly class="readonly-text">
+                </div>
+                <div class="half-width date-field">
+                    <label for="date">Date:</label>
+                    <input type="date" id="date" name="date" readonly>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="payTo">Please pay to:</label>
+                <input type="text" id="payTo" name="payTo" placeholder="Nama penerima dana" required>
+            </div>
+
+            <div class="form-group">
+                <label for="amount">Amount (Rp):</label>
+                <input type="number" id="amount" name="amount" placeholder="Contoh: 500000" oninput="convertToWords()" required>
+            </div>
+
+            <div class="form-group">
+                <label for="words">Words:</label>
+                <textarea id="words" name="words" rows="2" readonly placeholder="Otomatis terisi saat Amount diinput..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="forPurpose">For:</label>
+                <textarea id="forPurpose" name="forPurpose" rows="2" placeholder="Tujuan penggunaan dana" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="chargeTo">Charge to:</label>
+                <input type="text" id="chargeTo" name="chargeTo" placeholder="Nama akun / Departemen" required>
+            </div>
+
+            <div class="form-group">
+                <label>Approved by:</label>
+                <input type="text" value="Peter Nabut" readonly class="readonly-text">
+            </div>
+
+            <div class="form-group notes-section">
+                <label>Note:</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="paymentMethod" value="cash" required> Please give cash</label>
+                    <label><input type="radio" name="paymentMethod" value="transfer"> Please transfer</label>
+                </div>
+            </div>
+
+            <button type="button" class="print-btn" onclick="window.print()">Print Form</button>
+        </form>
+    </div>
+
+    <script>
+        // 1. Fungsi untuk mengisi tanggal hari ini secara otomatis
+        window.onload = function() {
+            var today = new Date();
+            var dd = String(today.getDate()).padStart(2, '0');
+            var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+            var yyyy = today.getFullYear();
+
+            today = yyyy + '-' + mm + '-' + dd;
+            document.getElementById('date').value = today;
+        };
+
+        // 2. Fungsi Terbilang (Mengubah Angka menjadi Huruf)
+        function terbilang(angka) {
+            var bilangan = ["", "Satu", "Dua", "Tiga", "Empat", "Lima", "Enam", "Tujuh", "Delapan", "Sembilan", "Sepuluh", "Sebelas"];
+            var temp = "";
+            if (angka < 12) {
+                temp = " " + bilangan[angka];
+            } else if (angka < 20) {
+                temp = terbilang(angka - 10) + " Belas";
+            } else if (angka < 100) {
+                temp = terbilang(Math.floor(angka / 10)) + " Puluh" + terbilang(angka % 10);
+            } else if (angka < 200) {
+                temp = " Seratus" + terbilang(angka - 100);
+            } else if (angka < 1000) {
+                temp = terbilang(Math.floor(angka / 100)) + " Ratus" + terbilang(angka % 100);
+            } else if (angka < 2000) {
+                temp = " Seribu" + terbilang(angka - 1000);
+            } else if (angka < 1000000) {
+                temp = terbilang(Math.floor(angka / 1000)) + " Ribu" + terbilang(angka % 1000);
+            } else if (angka < 1000000000) {
+                temp = terbilang(Math.floor(angka / 1000000)) + " Juta" + terbilang(angka % 1000000);
+            }
+            return temp;
+        }
+
+        // 3. Fungsi untuk mendeteksi input Amount dan menampilkan ke Words
+        function convertToWords() {
+            var amountVal = document.getElementById('amount').value;
+            var wordsField = document.getElementById('words');
+            
+            if (amountVal && amountVal > 0) {
+                var hasil = terbilang(amountVal).trim() + " Rupiah";
+                // Huruf pertama dibikin kapital
+                wordsField.value = hasil.charAt(0).toUpperCase() + hasil.slice(1);
+            } else {
+                wordsField.value = "";
+            }
+        }
+    </script>
+</body>
+</html>
