@@ -67,7 +67,6 @@ function prepareAndPrint(signatureType) {
     document.getElementById('print-words').innerText = document.getElementById('words').value;
     
     var chargeText = document.getElementById('chargeTo').value;
-    if(chargeText.trim() === "") { chargeText = "Account\nRsce/etc\nFnct/Who/etc"; }
     document.getElementById('print-charge').innerText = chargeText;
 
     var method = document.querySelector('input[name="paymentMethod"]:checked');
