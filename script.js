@@ -44,9 +44,7 @@ function convertToWords() {
     }
 }
 
-// Menambahkan parameter 'signatureType' untuk membedakan jenis Tanda Tangan
 function prepareAndPrint(signatureType) {
-    // A. Format Tanggal
     var dateVal = document.getElementById('date').value; 
     var dateParts = dateVal.split('-');
     
@@ -63,7 +61,6 @@ function prepareAndPrint(signatureType) {
     
     formatRibuan(document.getElementById('amount'));
 
-    // B. Salin Data
     document.getElementById('print-payTo').innerText = document.getElementById('payTo').value;
     document.getElementById('print-for').innerText = document.getElementById('forPurpose').value;
     document.getElementById('print-amount').innerText = document.getElementById('amount').value;
@@ -77,17 +74,13 @@ function prepareAndPrint(signatureType) {
     document.getElementById('box-cash').innerHTML = (method && method.value === 'cash') ? '&#10003;' : '';
     document.getElementById('box-transfer').innerHTML = (method && method.value === 'transfer') ? '&#10003;' : '';
 
-    // C. Logika Pemilihan Tanda Tangan
     var signatureArea = document.getElementById('print-signature');
     if (signatureType === 'qr') {
-        // Memasukkan gambar QR Code yang sudah disave di folder yang sama
         signatureArea.innerHTML = '<img src="qr-code.png" class="qr-signature" alt="QR Code">';
     } else {
-        // Memasukkan teks biasa dengan enter (br) agar sejajar dengan QR
         signatureArea.innerHTML = '<br><br><br><br>Peter Nabut';
     }
 
-    // D. Buka Print Dialog
     setTimeout(function() {
         window.print();
     }, 300); 
