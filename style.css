@@ -1,4 +1,4 @@
-/* Reset basic style */
+/* Global Style */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -12,7 +12,7 @@ body {
     color: #333;
 }
 
-/* --- TAMPILAN FORM DI LAYAR --- */
+/* --- SCREEN FORM UI --- */
 .form-container {
     background-color: #ffffff;
     max-width: 800px;
@@ -72,7 +72,7 @@ textarea { resize: vertical; }
 .qr-btn:hover { background-color: #0f3618; }
 
 
-/* --- TEMPLATE CETAK (DIPERBARUI: TANPA ITALIC) --- */
+/* --- PRINT TEMPLATE --- */
 #print-template {
     display: none; 
     font-family: 'Times New Roman', Times, serif; 
@@ -97,6 +97,11 @@ textarea { resize: vertical; }
         display: block; 
         width: 100%; 
         max-width: none; 
+    }
+
+    /* All elements in print forced to non-italic */
+    #print-template * {
+        font-style: normal !important;
     }
 
     .print-header { display: flex; align-items: center; margin-bottom: 20px; }
@@ -134,8 +139,9 @@ textarea { resize: vertical; }
     .print-amount-container { display: flex; align-items: center; margin-bottom: 20px; font-size: 18px; }
     .amount-box { 
         border: 1px dotted #000; padding: 5px 20px; font-weight: bold; 
-        /* font-style: italic dihapus */
-        min-width: 150px; text-align: center; transform: skewX(-15deg); margin-left: 10px; 
+        min-width: 150px; text-align: center; margin-left: 10px; 
+        /* Skew removed to prevent italic look on numbers */
+        transform: none !important; 
     }
     
     .print-words { font-size: 18px; margin-bottom: 40px; }
