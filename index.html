@@ -65,7 +65,10 @@
                 </div>
             </div>
 
-            <button type="button" class="print-btn" onclick="prepareAndPrint()">Preview & Save to PDF</button>
+            <div class="button-group">
+                <button type="button" class="print-btn" onclick="prepareAndPrint('text')">Preview & Save (Without QR)</button>
+                <button type="button" class="print-btn qr-btn" onclick="prepareAndPrint('qr')">Preview & Save (With QR)</button>
+            </div>
         </form>
     </div>
 
@@ -127,8 +130,8 @@
                 </div>
 
                 <div class="print-approved">
-                    Approved by,<br><br><br><br>
-                    Peter Nabut
+                    Approved by,<br>
+                    <div id="print-signature"></div>
                 </div>
             </div>
         </div>
