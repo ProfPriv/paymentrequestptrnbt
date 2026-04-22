@@ -12,7 +12,7 @@ body {
     color: #333;
 }
 
-/* --- STYLING UNTUK TAMPILAN FORM DI LAYAR --- */
+/* --- TAMPILAN FORM DI LAYAR --- */
 .form-container {
     background-color: #ffffff;
     max-width: 800px;
@@ -56,7 +56,6 @@ textarea { resize: vertical; }
 .radio-group { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
 .radio-group label { font-weight: normal; display: flex; align-items: center; gap: 10px; }
 
-/* Grup Tombol */
 .button-group {
     display: flex;
     gap: 15px;
@@ -69,12 +68,11 @@ textarea { resize: vertical; }
 }
 
 .print-btn:hover { background-color: #002244; }
-
 .qr-btn { background-color: #1a5628; }
 .qr-btn:hover { background-color: #0f3618; }
 
 
-/* --- TEMPLATE CETAK (Hanya Aktif Saat Print PDF) --- */
+/* --- TEMPLATE CETAK (DIPERBARUI: TANPA ITALIC) --- */
 #print-template {
     display: none; 
     font-family: 'Times New Roman', Times, serif; 
@@ -95,13 +93,16 @@ textarea { resize: vertical; }
 
     .form-container { display: none !important; } 
     
-    #print-template { display: block; width: 100%; max-width: none; }
+    #print-template { 
+        display: block; 
+        width: 100%; 
+        max-width: none; 
+    }
 
     .print-header { display: flex; align-items: center; margin-bottom: 20px; }
     .print-logo { width: 100px; height: auto; margin-right: 20px; }
     .print-title { text-align: center; flex: 1; margin-right: 120px; }
     .print-title h2 { font-size: 22px; font-weight: normal; margin: 0; }
-    .print-title h3 { font-size: 18px; font-weight: normal; margin: 5px 0; }
     .print-title h1 { font-size: 24px; font-weight: bold; margin: 10px 0; }
 
     .print-subhead { 
@@ -111,7 +112,7 @@ textarea { resize: vertical; }
 
     .print-body { 
         display: flex; 
-        min-height: 12cm; /* Diatur ke 12cm agar jarak tidak terlalu jauh ke bawah */
+        min-height: 12cm; 
         border-bottom: 1px solid transparent; 
     }
     
@@ -132,7 +133,8 @@ textarea { resize: vertical; }
 
     .print-amount-container { display: flex; align-items: center; margin-bottom: 20px; font-size: 18px; }
     .amount-box { 
-        border: 1px dotted #000; padding: 5px 20px; font-weight: bold; font-style: italic; 
+        border: 1px dotted #000; padding: 5px 20px; font-weight: bold; 
+        /* font-style: italic dihapus */
         min-width: 150px; text-align: center; transform: skewX(-15deg); margin-left: 10px; 
     }
     
@@ -143,7 +145,6 @@ textarea { resize: vertical; }
     .print-note { margin-top: auto; font-size: 18px; }
     .print-approved { margin-top: auto; font-size: 18px; padding-bottom: 10px;}
 
-    /* Styling Tanda Tangan QR Code saat Cetak */
     .qr-signature { width: 90px; height: auto; margin-top: 10px; margin-bottom: 10px; }
 
     .checkbox-item { display: flex; justify-content: space-between; width: 200px; margin-top: 5px; }
