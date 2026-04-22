@@ -29,27 +29,27 @@
 
             <div class="form-group">
                 <label for="payTo">Please pay to:</label>
-                <input type="text" id="payTo" name="payTo" placeholder="Nama penerima dana" required>
+                <input type="text" id="payTo" name="payTo" required>
             </div>
 
             <div class="form-group">
                 <label for="amount">Amount (Rp):</label>
-                <input type="number" id="amount" name="amount" placeholder="Contoh: 500000" oninput="convertToWords()" required>
+                <input type="text" id="amount" name="amount" oninput="formatRibuan(this)" required>
             </div>
 
             <div class="form-group">
                 <label for="words">Words:</label>
-                <textarea id="words" name="words" rows="2" readonly placeholder="Otomatis terisi saat Amount diinput..."></textarea>
+                <textarea id="words" name="words" rows="2" readonly></textarea>
             </div>
 
             <div class="form-group">
                 <label for="forPurpose">For:</label>
-                <textarea id="forPurpose" name="forPurpose" rows="2" placeholder="Tujuan penggunaan dana" required></textarea>
+                <textarea id="forPurpose" name="forPurpose" rows="2" required></textarea>
             </div>
 
             <div class="form-group">
-                <label for="chargeTo">Charge to:</label>
-                <input type="text" id="chargeTo" name="chargeTo" placeholder="Nama akun / Departemen" required>
+                <label for="chargeTo">Charge to (Account/Rsce/Fnct):</label>
+                <textarea id="chargeTo" name="chargeTo" rows="2" required></textarea>
             </div>
 
             <div class="form-group">
@@ -65,59 +65,75 @@
                 </div>
             </div>
 
-            <button type="button" class="print-btn" onclick="window.print()">Print Form</button>
+            <button type="button" class="print-btn" onclick="prepareAndPrint()">Preview & Save to PDF</button>
         </form>
     </div>
 
-    <script>
-        // 1. Fungsi untuk mengisi tanggal hari ini secara otomatis
-        window.onload = function() {
-            var today = new Date();
-            var dd = String(today.getDate()).padStart(2, '0');
-            var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-            var yyyy = today.getFullYear();
+    <div id="print-template">
+        <div class="print-header">
+            <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Logo-Unai.png" alt="Logo UNAI" class="print-logo" onerror="this.style.display='none'">
+            <div class="print-title">
+                <h2>UNIVERSITAS ADVENT INDONESIA</h2>
+                <h3>Treasury Department</h3>
+                <h1>REQUEST FOR PAYMENT</h1>
+            </div>
+        </div>
 
-            today = yyyy + '-' + mm + '-' + dd;
-            document.getElementById('date').value = today;
-        };
+        <div class="print-subhead">
+            <div class="to-section">To : Disbursement Cashier</div>
+            <div class="date-section">Date : <span id="print-date"></span></div>
+        </div>
 
-        // 2. Fungsi Terbilang (Mengubah Angka menjadi Huruf)
-        function terbilang(angka) {
-            var bilangan = ["", "Satu", "Dua", "Tiga", "Empat", "Lima", "Enam", "Tujuh", "Delapan", "Sembilan", "Sepuluh", "Sebelas"];
-            var temp = "";
-            if (angka < 12) {
-                temp = " " + bilangan[angka];
-            } else if (angka < 20) {
-                temp = terbilang(angka - 10) + " Belas";
-            } else if (angka < 100) {
-                temp = terbilang(Math.floor(angka / 10)) + " Puluh" + terbilang(angka % 10);
-            } else if (angka < 200) {
-                temp = " Seratus" + terbilang(angka - 100);
-            } else if (angka < 1000) {
-                temp = terbilang(Math.floor(angka / 100)) + " Ratus" + terbilang(angka % 100);
-            } else if (angka < 2000) {
-                temp = " Seribu" + terbilang(angka - 1000);
-            } else if (angka < 1000000) {
-                temp = terbilang(Math.floor(angka / 1000)) + " Ribu" + terbilang(angka % 1000);
-            } else if (angka < 1000000000) {
-                temp = terbilang(Math.floor(angka / 1000000)) + " Juta" + terbilang(angka % 1000000);
-            }
-            return temp;
-        }
+        <div class="print-body">
+            <div class="col-left">
+                <div class="print-field">
+                    <span>Please pay to :</span>
+                    <div class="line-input" id="print-payTo"></div>
+                </div>
+                
+                <div class="print-field">
+                    <span>For :</span>
+                    <div class="line-input multi-line" id="print-for"></div>
+                </div>
 
-        // 3. Fungsi untuk mendeteksi input Amount dan menampilkan ke Words
-        function convertToWords() {
-            var amountVal = document.getElementById('amount').value;
-            var wordsField = document.getElementById('words');
-            
-            if (amountVal && amountVal > 0) {
-                var hasil = terbilang(amountVal).trim() + " Rupiah";
-                // Huruf pertama dibikin kapital
-                wordsField.value = hasil.charAt(0).toUpperCase() + hasil.slice(1);
-            } else {
-                wordsField.value = "";
-            }
-        }
-    </script>
+                <div class="print-note">
+                    <i>Note:</i><br>
+                    <div class="checkbox-item">
+                        <span>- Please give cash</span>
+                        <div class="box" id="box-cash"></div>
+                    </div>
+                    <div class="checkbox-item">
+                        <span>- Please transfer</span>
+                        <div class="box" id="box-transfer"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-right">
+                <div class="print-amount-container">
+                    <span class="rp-text"><i>Rp.</i></span>
+                    <div class="amount-box" id="print-amount"></div>
+                </div>
+
+                <div class="print-words">
+                    <i>Words :</i> <strong id="print-words"></strong>
+                </div>
+
+                <div class="print-charge">
+                    Charge to:<br>
+                    <div class="charge-details" id="print-charge">
+                        Account<br>Rsce/etc<br>Fnct/Who/etc
+                    </div>
+                </div>
+
+                <div class="print-approved">
+                    Approved by,<br><br><br><br>
+                    Peter Nabut
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
